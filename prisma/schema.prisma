@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Pengguna {
+  id_pengguna           Int      @id @default(autoincrement())
+  username              String   @unique
+  password              String
+  role                  String
+  id_siswa              Int
+  id_guru               Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Siswa {
+  id_siswa              Int     @id @default(autoincrement())
+  nisn                  String
+  nama                  String    
+  alamat                String
+  jenis_kelamin         String
+  tempat_lahir          String
+  tanggal_lahir         String
+  agama                 String
+  no_tlp                String
+  email                 String
+  kewarganegaraan       String
+  kecamatan             String
+  kabupaten             String
+  nama_ayah             String
+  pekerjaan_ayah        String
+  nama_ibu              String
+  pekerjaan_ibu         String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Guru {
+  id_guru               Int         @id @default(autoincrement())
+  nip                   String
+  nama                  String
+  alamat                String
+  jenis_kelamin         String
+  tempat_lahir          String
+  tanggal_lahir         String
+  agama                 String
+  no_tlp                String
+  email                 String
+  jabatan               String
+  ktp                   String
+  kewarganegaraan       String
+  kecamatan             String
+  kabupaten             String
+  nama_ayah             String
+  pekerjaan_ayah        String
+  nama_ibu              String
+  pekerjaan_ibu         String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Kelas {
+  id_kelas              Int     @id @default(autoincrement())
+  nama                  String
+  grade                 String
+  jurusan               String
+  tahun_ajaran          String
+  id_guru               Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Kelas_siswa {
+  id_kelas_siswa        Int     @id @default(autoincrement())
+  id_siswa              Int
+  id_kelas              Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Profile {
+  id_profile            Int     @id @default(autoincrement())
+  bio                   String
+  id_siswa              Int
+  id_pengguna           Int
+  id_upload             Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Upload {
+  id_profile            Int     @id @default(autoincrement())
+  link                  String
+  title                 String
+  id_siswa              Int
+  id_pengguna           Int
+  id_upload             Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Posting {
+  id_posting            Int     @id @default(autoincrement())
+  title                 String
+  description           String
+  id_pengguna           Int
+  id_upload             Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Comment {
+  id_comment            Int     @id @default(autoincrement())
+  description           String
+  id_pengguna           Int
+  id_posting            Int
+  id_upload             Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+model Chatting_room{
+  id_room               Int     @id @default(autoincrement())
+  nama                  String
+}
+model chatting_room_member{
+  chatting_room_member  Int     @id @default(autoincrement())
+  id_chatting_room      Int
+  id_pengguna           Int
+}
+model message{
+  id_message            Int     @id @default(autoincrement())
+  text                  String
+  id_chatting_room      Int
+  id_pengguna           Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+
+model  Video_conference{
+  id_video_conference   Int     @id @default(autoincrement())
+  kode_video            String
+  id_pengguna           Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+
+model Conference_message{
+  id_conference_message Int     @id @default(autoincrement())
+  text                  String
+  id_pengguna           Int
+   id_video_conference  Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @default(now()) @updatedAt
+}
+
